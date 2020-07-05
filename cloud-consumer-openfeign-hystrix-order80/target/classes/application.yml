@@ -1,0 +1,31 @@
+server:
+  port: 80
+
+spring:
+  application:
+   name: cloud-openfeign-hystrix-order-service    #eureka客户端提供服务在集群时服务名称要一样
+
+
+
+ #eureka客户端配置
+eureka:
+  client:
+    register-with-eureka: true
+    fetchRegistry: true
+    service-url:
+      #defaultZone: http://localhost:7001/eureka
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka,http://eureka7003.com:7003/eureka   #集群版
+  instance:
+      instance-id: hystrixorderservice80   #这个是为了在eureka的页面中清楚的看到服务的名称，过滤了不需要的主机名
+      prefer-ip-address: true       #这个是为了在eureka的页面中鼠标浮动到上面这个服务的名称时可以显示此服务的ip地址
+
+#设置openfeign客户端超时时间（openfeign默认是支持Ribbon的。是基于Ribbon进行的封装。可以在openfeign的包中找到Ribbon的包）
+ribbon:
+  ReadTimeout:  5000    #指的是建立连接所用的时间，适用于网络状况正常的情况下，两端连接所用的时间
+  ConnectTimeout: 5000   #指的是建立连接后从服务器读取到可用资源所用的时间
+
+
+feign:
+  hystrix:
+    enabled: true #如果处理自身的容错就开启。开启方式与生产端不一样(服务端降级的时候没有这个配置，这是远程调用对降级处理的支持)。
+

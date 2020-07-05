@@ -1,0 +1,22 @@
+server:
+  port: 8001
+
+spring:
+  application:
+   name: cloud-hystrix-pay-service    #eureka客户端提供服务在集群时服务名称要一样
+
+
+
+ #eureka客户端配置
+eureka:
+  client:
+    register-with-eureka: true
+    fetchRegistry: true
+    service-url:
+      #defaultZone: http://localhost:7001/eureka
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka,http://eureka7003.com:7003/eureka   #集群版
+  instance:
+      instance-id: hystrixpayservice8001    #这个是为了在eureka的页面中清楚的看到服务的名称，过滤了不需要的主机名
+      prefer-ip-address: true       #这个是为了在eureka的页面中鼠标浮动到上面这个服务的名称时可以显示此服务的ip地址
+
+

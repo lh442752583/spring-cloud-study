@@ -1,0 +1,35 @@
+server:
+  port: 8001
+
+spring:
+  application:
+   name: cloud-pay-service    #eureka客户端提供服务在集群时服务名称要一样
+  datasource:
+   type: com.alibaba.druid.pool.DruidDataSource
+   driver-class-name: com.mysql.jdbc.Driver
+   url: jdbc:mysql://localhost:3306/springcloud?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
+   username: root
+   password: root
+
+
+
+#mybatis配置
+mybatis:
+ mapper-locations: classpath:mybatis/mappers/**/*.xml
+ typeAliasesPackage: com.pay.bean
+
+
+
+ #eureka客户端配置
+eureka:
+  client:
+    register-with-eureka: true
+    fetchRegistry: true
+    service-url:
+      #defaultZone: http://localhost:7001/eureka
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka,http://eureka7003.com:7003/eureka   #集群版
+  instance:
+      instance-id: payservice8001    #这个是为了在eureka的页面中清楚的看到服务的名称，过滤了不需要的主机名
+      prefer-ip-address: true       #这个是为了在eureka的页面中鼠标浮动到上面这个服务的名称时可以显示此服务的ip地址
+
+
